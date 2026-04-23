@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexabox软件发布站</title>
+    <link rel="stylesheet" href="https://unpkg.com/mdui@1.0.2/dist/css/mdui.min.css"/>
+    <script src="https://unpkg.com/mdui@1.0.2/dist/js/mdui.min.js"></script>
+    <style>
+        body {
+            background-color: #fafafa;
+        }
+        .publish-header {
+            background: #212121;
+            color: white;
+            padding: 60px 0 40px;
+            margin-bottom: 32px;
+        }
+        .download-card {
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .download-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+        }
+        .version-tag {
+            font-family: 'JetBrains Mono', monospace;
+            background: #e0e0e0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .env-requirement {
+            font-size: 13px;
+            color: #d32f2f;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+    </style>
+</head>
+<body class="mdui-appbar-with-toolbar mdui-theme-primary-blue-grey mdui-theme-accent-pink">
+
+    <header class="mdui-appbar mdui-appbar-fixed">
+        <div class="mdui-toolbar mdui-color-theme">
+            <span class="mdui-typo-title">Nexabox Publish</span>
+            <div class="mdui-toolbar-spacer"></div>
+            <a href="index.html" class="mdui-btn mdui-ripple">返回官网</a>
+        </div>
+    </header>
+
+    <div class="publish-header mdui-text-center">
+        <div class="mdui-container">
+            <h1 class="mdui-typo-display-1">Nexabox发布站</h1>
+            <p class="mdui-text-color-white-secondary">在这里下载由 Nexabox Studio 开发的各类实验性软件与系统镜像</p>
+        </div>
+    </div>
+
+    <div class="mdui-container">
+        
+        <div id="featured-container" class="mdui-row mdui-m-b-4"></div>
+
+        <div id="grid-container" class="mdui-row"></div>
+
+        <div class="mdui-typo mdui-m-t-4 mdui-m-b-4 mdui-text-center">
+            <hr/>
+            <p class="mdui-text-color-black-secondary">
+                © 2026 Nexabox. <br>
+                部分软件可能被杀毒软件误报。
+            </p>
+        </div>
+    </div>
+
+    <div class="mdui-dialog" id="warning-dialog">
+        <div class="mdui-dialog-title mdui-text-color-red">安全警告</div>
+        <div class="mdui-dialog-content">
+            91
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-close>取消下载</button>
+            <button class="mdui-btn mdui-ripple mdui-text-color-red" mdui-dialog-close>我已知晓风险，继续下载</button>
+        </div>
+    </div>
+
+    <script>
+        // 获取并渲染 JSON 数据
+        fetch('software.json')
+            .then(response => response.json())
+            .then(data => {
+                const featuredContainer = document.getElementById('featured-container');
+                const gridContainer = document.getElementById('grid-container');
+
+                data.forEach(item => {
+                    // 生成版本标签
+                    const versionHtml = item.version 
+                        ? `<span class="version-tag ${item.isFeatured ? 'mdui-color-blue-grey-700 mdui-text-color-white' : ''}">${item.version}</span> | ` 
+                        : '';
+                    
+                    // 生成环境依赖标签
+                    const reqHtml = item.requirements
+                        ? `<div class="env-requirement" style="color: ${item.requirements.color}; margin-top: 8px;">
+                               <i class="mdui-icon material-icons" style="font-size: 16px;">${item.requirements.icon}</i>
+                               ${item.requirements.text}
+                           </div>`
+                        : '';
+
+                    // 生成按钮组
+                    const buttonsHtml = item.buttons.map(btn => {
+                        const iconHtml = btn.icon ? `<i class="mdui-icon material-icons mdui-icon-left">${btn.icon}</i>` : '';
+                        const dialogAttr = btn.dialogTarget ? `mdui-dialog="{target: '${btn.dialogTarget}'}"` : '';
+                        
+                        // 如果有 href 和 target，用 <a> 标签；如果是弹窗触发器，用 <button> 标签
+                        if (btn.url && btn.url !== "javascript:void(0);") {
+                            return `<a href="${btn.url}" target="${btn.target || '_self'}" class="mdui-btn mdui-ripple ${btn.classes}" ${dialogAttr}>${iconHtml} ${btn.text}</a>`;
+                        } else {
+                            return `<button class="mdui-btn mdui-ripple ${btn.classes}" ${dialogAttr}>${iconHtml} ${btn.text}</button>`;
+                        }
+                    }).join('');
+
+                    // 渲染大图推荐卡片
+                    if (item.isFeatured) {
+                        featuredContainer.innerHTML += `
+                            <div class="mdui-col-xs-12">
+                                <div class="mdui-card mdui-color-blue-grey-900 mdui-text-color-white">
+                                    <div class="mdui-card-primary">
+                                        <div class="mdui-card-primary-title mdui-text-color-white">${item.title}</div>
+                                        <div class="mdui-card-primary-subtitle mdui-text-color-white-secondary">
+                                            ${versionHtml}负责人: ${item.authors.join(', ')}
+                                        </div>
+                                    </div>
+                                    <div class="mdui-card-content">
+                                        ${item.description}
+                                        ${reqHtml}
+                                    </div>
+                                    <div class="mdui-card-actions">
+                                        ${buttonsHtml}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } 
+                    // 渲染常规网格卡片
+                    else {
+                        gridContainer.innerHTML += `
+                            <div class="mdui-col-sm-6 mdui-col-md-4 mdui-m-b-3">
+                                <div class="mdui-card download-card">
+                                    <div class="mdui-card-primary">
+                                        <div class="mdui-card-primary-title">${item.title}</div>
+                                        <div class="mdui-card-primary-subtitle">负责人: ${item.authors.join(', ')}</div>
+                                    </div>
+                                    <div class="mdui-card-content">
+                                        <p>${item.description}</p>
+                                        ${reqHtml}
+                                    </div>
+                                    <div class="mdui-divider"></div>
+                                    <div class="mdui-card-actions">
+                                        ${buttonsHtml}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+                
+                // 重新初始化 MDUI 以确保动态生成的组件（如弹窗、涟漪效果）生效
+                mdui.mutation();
+            })
+            .catch(error => console.error('加载软件列表失败:', error));
+    </script>
+</body>
+</html>

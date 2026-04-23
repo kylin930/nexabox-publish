@@ -1,0 +1,64 @@
+[
+  {
+    "id": "core-sight",
+    "title": "CoreSight",
+    "version": "1.0",
+    "authors": ["董二千"],
+    "description": "内部测试发布版。",
+    "isFeatured": false,
+    "requirements": {
+      "icon": "error_outline",
+      "text": "依赖环境: .NET 10.0",
+      "color": "#d32f2f"
+    },
+    "buttons": [
+      {
+        "text": "下载 CoreSight-发布.7z",
+        "icon": "get_app",
+        "classes": "mdui-btn-block mdui-text-color-theme",
+        "url": "https://publish.nexabox.de/91",
+        "target": "_self"
+      }
+    ]
+  },
+  {
+    "id": "shell-library",
+    "title": "ShellLibrary.Cmd",
+    "version": "1.0",
+    "authors": ["offmn-user"],
+    "description": "高度模块化的 Shell 框架。支持快速构建自定义终端环境，源码级分发。",
+    "isFeatured": false,
+    "requirements": {
+      "icon": "code",
+      "text": "test91",
+      "color": "#4caf50"
+    },
+    "buttons": [
+      {
+        "text": "访问GitHub仓库",
+        "icon": "link",
+        "classes": "mdui-btn-block mdui-text-color-theme",
+        "url": "https://github.com/OFFMN-SHARP/ShellLibrary.Cmd",
+        "target": "_blank"
+      }
+    ]
+  },
+  {
+    "id": "red-rabbit",
+    "title": "神州红兔子",
+    "version": null,
+    "authors": ["董二千"],
+    "description": "病毒。<strong>请在虚拟机中运行。</strong>",
+    "isFeatured": false,
+    "requirements": null,
+    "buttons": [
+      {
+        "text": "获取样本",
+        "icon": "warning",
+        "classes": "mdui-btn-block mdui-text-color-red",
+        "url": "javascript:void(0);",
+        "dialogTarget": "#warning-dialog"
+      }
+    ]
+  }
+]
