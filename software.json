@@ -24,9 +24,9 @@
   {
     "id": "shell-library",
     "title": "ShellLibrary.Cmd",
-    "version": "1.0",
+    "version": "0.1.2",
     "authors": ["offmn-user"],
-    "description": "高度模块化的 Shell 框架。支持快速构建自定义终端环境，源码级分发。",
+    "description": "一个为 .NET 应用程序设计的声明式交互式 Shell 框架，支持管道、外部二进制调用、打字机效果、安全锁定以及批处理脚本执行等特性。",
     "isFeatured": false,
     "requirements": {
       "icon": "code",
@@ -35,10 +35,10 @@
     },
     "buttons": [
       {
-        "text": "访问GitHub仓库",
-        "icon": "link",
+        "text": "下载 ShellLibrary.Cmd",
+        "icon": "get_app",
         "classes": "mdui-btn-block mdui-text-color-theme",
-        "url": "https://github.com/OFFMN-SHARP/ShellLibrary.Cmd",
+        "url": "https://www.nuget.org/packages/ShellLibrary.Cmd/",
         "target": "_blank"
       }
     ]
@@ -58,6 +58,42 @@
         "classes": "mdui-btn-block mdui-text-color-red",
         "url": "javascript:void(0);",
         "dialogTarget": "#warning-dialog"
+      }
+    ]
+  },
+  {
+    "id": "shell-library-game",
+    "title": "ShellLibrary.Cmd.Game",
+    "version": "0.1.0",
+    "authors": ["offmn-user"],
+    "description": "通用游戏控制台框架后端。一个专为游戏引擎（Unity、Godot、Unreal 等）设计的超轻量级交互式控制台框架，仅 28 KB，无任何外部依赖。",
+    "isFeatured": false,
+    "requirements": null,
+    "buttons": [
+      {
+        "text": "下载 ShellLibrary.Cmd.Game",
+        "icon": "get_app",
+        "classes": "mdui-btn-block mdui-text-color-theme",
+        "url": "https://www.nuget.org/packages/ShellLibrary.Cmd.Game",
+        "target": "_blank"
+      }
+    ]
+  },
+  {
+    "id": "morden-action",
+    "title": "MordenAction",
+    "version": "1.0.0",
+    "authors": ["offmn-user"],
+    "description": "一个基于 .NET 8.0 的命令行工具，用于管理和执行构建前后的脚本，并将自定义编译器集成到工作流中。",
+    "isFeatured": false,
+    "requirements": null,
+    "buttons": [
+      {
+        "text": "访问GitHub仓库",
+        "icon": "link",
+        "classes": "mdui-btn-block mdui-text-color-theme",
+        "url": "https://github.com/OFFMN-SHARP/ModernAction",
+        "target": "_blank"
       }
     ]
   }
